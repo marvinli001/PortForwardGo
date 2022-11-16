@@ -1,7 +1,7 @@
 @echo off
 set UserName=ProjectPF
 set Name=PortForwardGo
-set Version=1.1.0
+set Version=1.1.1
 
 if exist dist (
     del /F /S /Q dist > NUL
