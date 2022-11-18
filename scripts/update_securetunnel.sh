@@ -99,6 +99,12 @@ if [ ! -f "/tmp/SecureTunnel.tar.gz" ]; then
     exit 1
 fi
 
+tar -xvzf /tmp/SecureTunnel.tar.gz -C /tmp/
+if [ ! -f "/tmp/SecureTunnel" ]; then
+    echo -e "${Font_Red}Decompression failed${Font_Suffix}"
+    exit 1
+fi
+
 rm -f ${dir}/SecureTunnel
 
 chmod 777 /tmp/SecureTunnel
