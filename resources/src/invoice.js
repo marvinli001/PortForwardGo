@@ -3,7 +3,7 @@ adminBanner();
 var invoice_id = 0;
 
 var paymethods = {
-    qqpay: "",
+    qqpay: "QQ支付",
     wxpay: "微信支付",
     alipay: "支付宝",
 }

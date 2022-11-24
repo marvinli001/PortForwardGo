@@ -51,10 +51,10 @@ $("#add_cancel").on("click", function () {
 });
 
 function info_announcement(announcement) {
-  $("#info_id").html(announcement.id)
-  $("#info_title").html(announcement.title)
+  $("#info_id").text(announcement.id)
+  $("#info_title").text(announcement.title)
   $("#info_content").html(marked.parse(announcement.content));
-  $("#info_edit_at").html(announcement.edit_at);
+  $("#info_edit_at").text(announcement.edit_at);
 
   info.open();
 }
@@ -74,7 +74,7 @@ function edit_announcement(id) {
         announcement = response.Data;
         announcements[announcement.id] = announcement;
 
-        $("#edit_id").html(announcement.id);
+        $("#edit_id").text(announcement.id);
         $("#edit_title").val(announcement.title);
         $("#edit_content").val(announcement.content);
 
@@ -90,7 +90,7 @@ function edit_announcement(id) {
 }
 
 $("#edit_enter").on("click", function () {
-  var id = $("#edit_id").html();
+  var id = $("#edit_id").text();
 
   var title = $("#edit_title").val();
   var content = $("#edit_content").val();

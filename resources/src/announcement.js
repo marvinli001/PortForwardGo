@@ -8,15 +8,15 @@ $.ajax({
         if (response.Ok) {
             var announcement = response.Data
 
-            $("#title").html(announcement.title)
-            $("#edit_at").html(announcement.edit_at)
+            $("#title").text(announcement.title)
+            $("#edit_at").text(announcement.edit_at)
             $("#content").html(marked.parse(announcement.content));
 
             $("#view_announcement").removeAttr("style");
             done();
         } else {
             $("#error").removeAttr("style");
-            $("#error").html(response.Msg);
+            $("#error").text(response.Msg);
             done();
             sendmsg(response.Msg);
         }

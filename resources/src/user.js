@@ -11,16 +11,16 @@ $.ajax({
                 $("#admin_banner").removeAttr("style");
             }
 
-            $("#user_id").html("#" + response.Data.id);
-            $("#username").html(response.Data.username);
+            $("#user_id").text("#" + response.Data.id);
+            $("#username").text(response.Data.username);
 
             if (response.Data.name == "") {
-                $("#name").html(response.Data.username);
+                $("#name").text(response.Data.username);
             } else {
-                $("#name").html(response.Data.name);
+                $("#name").text(response.Data.name);
             }
 
-            $("#balance").html(response.Data.balance);
+            $("#balance").text(response.Data.balance);
             switch (response.Data.permission) {
                 case 0:
                     $("#permission").html('<font class="mdui-text-color-red">已封禁</font>');
@@ -34,12 +34,12 @@ $.ajax({
             }
 
             if (response.Data.token == null) {
-                $("#token").html("未设置");
+                $("#token").text("未设置");
             } else {
-                $("#token").html(response.Data.token);
+                $("#token").text(response.Data.token);
             }
 
-            $("#registration_date").html(response.Data.registration_date);
+            $("#registration_date").text(response.Data.registration_date);
 
             done();
         } else sendmsg(response.Msg);
@@ -49,7 +49,7 @@ $.ajax({
     });
 
 $("#change_name").on('click', function () {
-    Name = $("#name").html();
+    Name = $("#name").text();
     $("#name").html(`<div class="mdui-list-item mdui-textfield"><input id="edit_name" class="mdui-textfield-input" style="width: 350px" /></div>`);
     $("#edit_name").val(Name);
     $("#edit_name").attr('origin_name', Name);
@@ -79,7 +79,7 @@ $("#submit_name").on('click', function () {
             if (response.Ok) {
                 sendmsg("修改成功");
 
-                $("#name").html(Name);
+                $("#name").text(Name);
                 $("#change_name").removeAttr("style");
                 $("#submit_name").attr("style", "display: none;");
                 $("#cancel_name").attr("style", "display: none;");
@@ -100,7 +100,7 @@ $("#change_token").on('click', function () {
             .done(function (response) {
                 if (response.Ok) {
                     sendmsg("重置成功");
-                    $("#token").html(response.Token);
+                    $("#token").text(response.Token);
                 } else sendmsg(response.Msg);
             })
             .fail(function () {
@@ -111,7 +111,7 @@ $("#change_token").on('click', function () {
 
 $("#cancel_name").on('click', function () {
     Name = $("#edit_name").attr('origin_name');
-    $("#name").html(Name);
+    $("#name").text(Name);
     $("#change_name").removeAttr("style");
     $("#submit_name").attr("style", "display: none;");
     $("#cancel_name").attr("style", "display: none;");

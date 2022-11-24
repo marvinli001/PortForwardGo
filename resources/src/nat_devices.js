@@ -54,7 +54,7 @@ function edit_device(id) {
       if (response.Ok) {
         device = response.Data;
 
-        $("#edit_id").html(device.id);
+        $("#edit_id").text(device.id);
         $("#edit_name").val(device.name);
 
         mdui.mutation()
@@ -69,7 +69,7 @@ function edit_device(id) {
 }
 
 $("#edit_enter").on("click", function () {
-  var id = $("#edit_id").html();
+  var id = $("#edit_id").text();
 
   if (!id) {
     return;
@@ -153,10 +153,10 @@ function load_devices() {
               <i class="mdui-checkbox-icon"></i>
             </label>
           </td>
-          <td>${device.name}<br><small class="mdui-text-color-grey">#${device.id}</td>
-          <td>${device.version}</td>
-          <td>${device.secret}</td>
-          <td>${device.updated}</td>
+          <td>${escapeHTML(device.name)}<br><small class="mdui-text-color-grey">#${device.id}</td>
+          <td>${escapeHTML(device.version)}</td>
+          <td>${escapeHTML(device.secret)}</td>
+          <td>${escapeHTML(device.updated)}</td>
           <td>
           <span id="edit_${device.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '编辑'}">
             <i class="mdui-icon material-icons">edit</i>

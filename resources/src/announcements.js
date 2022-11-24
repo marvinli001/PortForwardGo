@@ -24,11 +24,11 @@ $.ajax({
                     latest_announcement = announcement
                 }
 
-                $("#announcement-select").prepend(`<option value="${announcement.id}">${announcement.title}</option>`);
+                $("#announcement-select").prepend(`<option value="${announcement.id}">${escapeHTML(announcement.title)}</option>`);
             }
 
-            $("#title").html(latest_announcement.title)
-            $("#edit_at").html(latest_announcement.edit_at)
+            $("#title").text(latest_announcement.title)
+            $("#edit_at").text(latest_announcement.edit_at)
             $("#content").html(marked.parse(latest_announcement.content));
             $("#announcement-select")
                 .find("option[value=" + latest_announcement.id + "]")
@@ -49,8 +49,8 @@ $("#announcement-select").on('change', function () {
     }
 
     var announcement = announcements[id]
-    $("#title").html(announcement.title)
-    $("#edit_at").html(announcement.edit_at)
+    $("#title").text(announcement.title)
+    $("#edit_at").text(announcement.edit_at)
     $("#content").html(marked.parse(announcement.content));
 })
 

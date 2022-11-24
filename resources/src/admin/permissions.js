@@ -88,8 +88,8 @@ $("#add_cancel").on("click", function () {
 function info_permission(permission) {
   var name = ""
 
-  $("#info_id").html(permission.id)
-  $("#info_name").html(permission.name);
+  $("#info_id").text(permission.id)
+  $("#info_name").text(permission.name);
 
   var nodelist = permission.nodes.split("|")
   $("#info_node").empty()
@@ -128,7 +128,7 @@ function edit_permission(id) {
         permission = response.Data;
         permissions[permission.id] = permission;
 
-        $("#edit_id").html(permission.id);
+        $("#edit_id").text(permission.id);
         $("#edit_name").val(permission.name);
 
         var node = permission.nodes.split("|");
@@ -157,7 +157,7 @@ function edit_permission(id) {
 }
 
 $("#edit_enter").on("click", function () {
-  var id = $("#edit_id").html();
+  var id = $("#edit_id").text();
   var name = $("#edit_name").val();
 
   var node = [];

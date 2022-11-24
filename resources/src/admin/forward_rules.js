@@ -55,68 +55,68 @@ $("#node-select").on('change', function () {
 })
 
 function info_rule(rule) {
-  $("#info_id").html(rule.id);
-  $("#info_name").html(rule.name);
+  $("#info_id").text(rule.id);
+  $("#info_name").text(rule.name);
 
-  $("#info_node").html(nodes[rule.node_id].name);
-  $("#info_node_addr").html(nodes[rule.node_id].addr);
+  $("#info_node").text(nodes[rule.node_id].name);
+  $("#info_node_addr").text(nodes[rule.node_id].addr);
 
-  $("#info_protocol").html(protocol[rule.protocol]);
+  $("#info_protocol").text(protocol[rule.protocol]);
   switch (rule.protocol) {
     case "http": case "https":
-      $("#tag_info_bind").html("绑定域名");
+      $("#tag_info_bind").text("绑定域名");
       break;
     default:
-      $("#tag_info_bind").html("监听端口");
+      $("#tag_info_bind").text("监听端口");
       break;
   }
-  $("#info_bind").html(rule.bind);
+  $("#info_bind").text(rule.bind);
 
   switch (rule.mode) {
     case 0:
-      $("#info_mode").html("单转发");
+      $("#info_mode").text("单转发");
       break;
     case 1:
-      $("#info_mode").html("负载均衡");
+      $("#info_mode").text("负载均衡");
       break;
     case 2:
-      $("#info_mode").html("故障转移");
+      $("#info_mode").text("故障转移");
       break;
   }
 
   $("#info_targets").empty();
   for (i in rule.targets) {
-    $("#info_targets").append(rule.targets[i].Host + ":" + rule.targets[i].Port + "<br>");
+    $("#info_targets").append(escapeHTML(rule.targets[i].Host) + ":" + escapeHTML(rule.targets[i].Port) + "<br>");
   }
 
-  if (rule.outbound == "") $("#info_outbound").html("系统默认"); else $("#info_outbound").html(rule.outbound);
+  if (rule.outbound == "") $("#info_outbound").text("系统默认"); else $("#info_outbound").text(rule.outbound);
 
   switch (rule.proxy_protocol) {
     case 0:
-      $("#info_proxy").html("关闭");
+      $("#info_proxy").text("关闭");
       break;
     case 1:
-      $("#info_proxy").html("v1");
+      $("#info_proxy").text("v1");
       break;
     case 2:
-      $("#info_proxy").html("v2");
+      $("#info_proxy").text("v2");
       break;
   }
 
   $("#tag_info_dest").attr("style", "display: none;");
   if (rule.dest_node != 0) {
     $("#tag_info_dest").removeAttr("style");
-    $("#info_dest").html(nodes[rule.dest_node].name);
+    $("#info_dest").text(nodes[rule.dest_node].name);
   }
   if (rule.dest_device != 0) {
     $("#tag_info_dest").removeAttr("style");
-    $("#info_dest").html(devices[rule.dest_device].name);
+    $("#info_dest").text(devices[rule.dest_device].name);
   }
 
   $("#info_conf").empty();
   if (rule.conf != null) {
     for (key in rule.conf) {
-      $("#info_conf").append(key + "=" + rule.conf[key] + "<br>");
+      $("#info_conf").append(escapeHTML(key) + "=" + escapeHTML(rule.conf[key]) + "<br>");
     }
   }
 
@@ -142,7 +142,7 @@ function edit_rule(id) {
       if (response.Ok) {
         rule = response.Data;
 
-        $("#edit_id").html(id);
+        $("#edit_id").text(id);
         $("#edit_name").val(rule.name);
 
         $("#edit_mode option:selected").removeAttr("selected");
@@ -202,19 +202,19 @@ function edit_rule(id) {
         if (rule.conf != null) {
           for (key in rule.conf) {
             var html = `
-    <li conf="${key}" class="mdui-list-item mdui-row">
-      <div class="mdui-list-item mdui-col-xs-3">${key}</div>
+    <li conf="${escapeHTML(key)}" class="mdui-list-item mdui-row">
+      <div class="mdui-list-item mdui-col-xs-3">${escapeHTML(key)}</div>
       <div class="mdui-list-item mdui-textfield">
-        <input conf="${key}" class="mdui-textfield-input" type="text" />
+        <input conf="${escapeHTML(key)}" class="mdui-textfield-input" type="text" />
       </div>
-      <button conf="${key}" class="mdui-btn mdui-btn-icon mdui-btn-raised mdui-shadow-4 mdui-color-theme mdui-ripple">
+      <button conf="${escapeHTML(key)}" class="mdui-btn mdui-btn-icon mdui-btn-raised mdui-shadow-4 mdui-color-theme mdui-ripple">
         <i class="mdui-list-item-icon mdui-icon material-icons">delete</i>
       </button>
     </li>`;
             $("#tag_edit_conf").append(html);
-            $(`input[conf="${key}"]`).val(rule.conf[key]);
+            $(`input[conf="${escapeHTML(key)}"]`).val(rule.conf[key]);
 
-            $(`button[conf="${key}"]`).on("click", null, key, function (event) {
+            $(`button[conf="${escapeHTML(key)}"]`).on("click", null, escapeHTML(key), function (event) {
               $(`li[conf="${event.data}"]`).remove();
             });
           }
@@ -232,7 +232,7 @@ function edit_rule(id) {
 }
 
 $("#edit_enter").on("click", function () {
-  var id = $("#edit_id").html();
+  var id = $("#edit_id").text();
 
   var name = $("#edit_name").val();
   var mode = Number($("#edit_mode option:selected").val());
@@ -336,24 +336,24 @@ $("#edit_conf").on("click", function () {
     return;
   }
 
-  if ($(`[conf="${conf}"]`).length > 0) {
+  if ($(`[conf="${escapeHTML(conf)}"]`).length > 0) {
     sendmsg("配置项已存在");
     return;
   }
 
   var html = `
-  <li conf="${conf}" class="mdui-list-item mdui-row">
-    <div class="mdui-list-item mdui-col-xs-3">${conf}</div>
+  <li conf="${escapeHTML(conf)}" class="mdui-list-item mdui-row">
+    <div class="mdui-list-item mdui-col-xs-3">${escapeHTML(conf)}</div>
     <div class="mdui-list-item mdui-textfield">
-        <input conf="${conf}" class="mdui-textfield-input" type="text" />
+        <input conf="${escapeHTML(conf)}" class="mdui-textfield-input" type="text" />
     </div>
-    <button conf="${conf}" class="mdui-btn mdui-btn-icon mdui-btn-raised mdui-shadow-4 mdui-color-theme mdui-ripple">
+    <button conf="${escapeHTML(conf)}" class="mdui-btn mdui-btn-icon mdui-btn-raised mdui-shadow-4 mdui-color-theme mdui-ripple">
         <i class="mdui-list-item-icon mdui-icon material-icons">delete</i>
     </button>
   </li>`;
   $("#tag_edit_conf").append(html);
 
-  $(`button[conf="${conf}"]`).on("click", null, conf, function (event) {
+  $(`button[conf="${escapeHTML(conf)}"]`).on("click", null, escapeHTML(conf), function (event) {
     $(`li[conf="${event.data}"]`).remove();
   });
 
@@ -442,9 +442,9 @@ function load_rules() {
 
           var outbound_text = "";
           if (rule.dest_node != 0) {
-            outbound_text = `<br><small class="mdui-text-color-grey">出口: ${nodes[rule.dest_node].name}</small>`;
+            outbound_text = `<br><small class="mdui-text-color-grey">出口: ${escapeHTML(nodes[rule.dest_node].name)}</small>`;
           } else if (rule.dest_device != 0) {
-            outbound_text = `<br><small class="mdui-text-color-grey">出口: ${devices[rule.dest_device].name}</small>`;
+            outbound_text = `<br><small class="mdui-text-color-grey">出口: ${escapeHTML(devices[rule.dest_device].name)}</small>`;
           }
 
           var html = `<tr id="rule_${rule.id}" data-rule="${rule.id}">
@@ -454,15 +454,15 @@ function load_rules() {
                 <i class="mdui-checkbox-icon"></i>
               </label>
             </td>
-            <td>${rule.name}<br><small class="mdui-text-color-grey">#${rule.id}</small></td>
-            <td>${users[rule.user_id].name}<br><small class="mdui-text-color-grey">#${rule.user_id}</small></td>
+            <td>${escapeHTML(rule.name)}<br><small class="mdui-text-color-grey">#${rule.id}</small></td>
+            <td>${escapeHTML(users[rule.user_id].name)}<br><small class="mdui-text-color-grey">#${rule.user_id}</small></td>
             <td>${nodes[rule.node_id].name}<br><small class="mdui-text-color-grey">${nodes[rule.node_id].addr}</small></td>
-            <td>${rule.bind}${traffic_used}</td>`;
+            <td>${escapeHTML(rule.bind)}${traffic_used}</td>`;
 
           if (rule.targets.length < 1) {
             html += `<td>无${mode_text}</td>`;
           } else {
-            html += `<td>${rule.targets[0].Host}:${rule.targets[0].Port}${mode_text}</td>`;
+            html += `<td>${escapeHTML(rule.targets[0].Host)}:${escapeHTML(rule.targets[0].Port)}${mode_text}</td>`;
           }
 
           html += `<td>${protocol[rule.protocol]}${outbound_text}</td>
@@ -589,9 +589,9 @@ function reload_rules() {
 
     var outbound_text = "";
     if (rule.dest_node != 0) {
-      outbound_text = `<br><small class="mdui-text-color-grey">出口: ${nodes[rule.dest_node].name}</small>`;
+      outbound_text = `<br><small class="mdui-text-color-grey">出口: ${escapeHTML(nodes[rule.dest_node].name)}</small>`;
     } else if (rule.dest_device != 0) {
-      outbound_text = `<br><small class="mdui-text-color-grey">出口: ${devices[rule.dest_device].name}</small>`;
+      outbound_text = `<br><small class="mdui-text-color-grey">出口: ${escapeHTML(devices[rule.dest_device].name)}</small>`;
     }
 
     var html = `<tr id="rule_${rule.id}" data-rule="${rule.id}">
@@ -601,15 +601,15 @@ function reload_rules() {
                 <i class="mdui-checkbox-icon"></i>
               </label>
             </td>
-            <td>${rule.name}<br><small class="mdui-text-color-grey">#${rule.id}</small></td>
-            <td>${users[rule.user_id].name}<br><small class="mdui-text-color-grey">#${rule.user_id}</small></td>
+            <td>${escapeHTML(rule.name)}<br><small class="mdui-text-color-grey">#${rule.id}</small></td>
+            <td>${escapeHTML(users[rule.user_id].name)}<br><small class="mdui-text-color-grey">#${rule.user_id}</small></td>
             <td>${nodes[rule.node_id].name}<br><small class="mdui-text-color-grey">${nodes[rule.node_id].addr}</small></td>
-            <td>${rule.bind}${traffic_used}</td>`;
+            <td>${escapeHTML(rule.bind)}${traffic_used}</td>`;
 
     if (rule.targets.length < 1) {
       html += `<td>无${mode_text}</td>`;
     } else {
-      html += `<td>${rule.targets[0].Host}:${rule.targets[0].Port}${mode_text}</td>`;
+      html += `<td>${escapeHTML(rule.targets[0].Host)}:${escapeHTML(rule.targets[0].Port)}${mode_text}</td>`;
     }
 
     html += `<td>${protocol[rule.protocol]}${outbound_text}</td>
@@ -863,7 +863,7 @@ function stop_rule(id) {
 }
 
 function debug_rule(id) {
-  $("#debug_id").html(id);
+  $("#debug_id").text(id);
   $("#debug_inbound").empty();
   $("#debug_outbound").empty();
 
@@ -875,7 +875,7 @@ function debug_rule(id) {
     .done(function (response) {
       if (response.Ok) {
         if (response.InBound == null) {
-          $("#debug_inbound").html("入口连接失败");
+          $("#debug_inbound").text("入口连接失败");
         } else {
           if (response.InBound.Ok) {
             $("#debug_inbound").append(`后端反馈时间 ${response.InBound.Data.Timestarp}<br>`);
@@ -890,7 +890,7 @@ function debug_rule(id) {
             $("#debug_inbound").append(`转发目标<br>`);
 
             for (target in response.InBound.Data.Targets) {
-              $("#debug_inbound").append(`&nbsp;- ${target}<br>`);
+              $("#debug_inbound").append(`&nbsp;- ${escapeHTML(target)}<br>`);
 
               if (response.InBound.Data.Targets[target].Ok) {
                 for (ip in response.InBound.Data.Targets[target].Data) {
@@ -900,7 +900,7 @@ function debug_rule(id) {
                 $("#debug_inbound").append(`&nbsp;Error: ${response.InBound.Data.Targets[target].Error}<br>`);
               }
             }
-          } else $("#debug_inbound").html(response.InBound.Data);
+          } else $("#debug_inbound").text(response.InBound.Data);
         }
 
         $("#tag_debug_outbound").attr("style", "display: none")
@@ -908,7 +908,7 @@ function debug_rule(id) {
           $("#tag_debug_outbound").removeAttr("style")
 
           if (response.OutBound == null) {
-            $("#debug_outbound").html("出口连接失败");
+            $("#debug_outbound").text("出口连接失败");
           } else {
             if (response.OutBound.Ok) {
               $("#debug_outbound").append(`后端反馈时间 ${response.OutBound.Data.Timestarp}<br>`);
@@ -923,7 +923,7 @@ function debug_rule(id) {
               $("#debug_outbound").append(`转发目标<br>`);
 
               for (target in response.OutBound.Data.Targets) {
-                $("#debug_outbound").append(`&nbsp;- ${target}<br>`);
+                $("#debug_outbound").append(`&nbsp;- ${escapeHTML(target)}<br>`);
 
                 if (response.OutBound.Data.Targets[target].Ok) {
                   for (ip in response.OutBound.Data.Targets[target].Data) {
@@ -933,7 +933,7 @@ function debug_rule(id) {
                   $("#debug_outbound").append(`&nbsp;Error: ${response.OutBound.Data.Targets[target].Error}<br>`);
                 }
               }
-            } else $("#debug_outbound").html(response.OutBound.Data);
+            } else $("#debug_outbound").text(response.OutBound.Data);
           }
         }
 

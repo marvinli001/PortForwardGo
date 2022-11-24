@@ -45,3 +45,8 @@ function compareTime(time1, time2) {
 function formatDate(date) {
   return date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, 0) + "-" + date.getDate().toString().padStart(2, 0)
 }
+
+function escapeHTML(s) {
+  if (typeof (s) != "string") return s;
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}

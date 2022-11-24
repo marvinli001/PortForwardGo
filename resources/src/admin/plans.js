@@ -89,21 +89,21 @@ $("#add_cancel").on("click", function () {
 });
 
 function info_plan(plan) {
-  $("#info_id").html(plan.id)
-  $("#info_name").html(plan.name);
-  $("#info_permissions").html(plan.permission_id + " | " + permissions[plan.permission_id].name);
+  $("#info_id").text(plan.id)
+  $("#info_name").text(plan.name);
+  $("#info_permissions").text(plan.permission_id + " | " + permissions[plan.permission_id].name);
   $("#info_hidden").prop("checked", plan.hidden);
 
 
-  $("#info_rule").html(plan.rule + " 条");
-  $("#info_nat_rule").html(plan.nat_rule + " 条");
-  $("#info_traffic").html((plan.traffic / 1073741824).toFixed() + " GB");
+  $("#info_rule").text(plan.rule + " 条");
+  $("#info_nat_rule").text(plan.nat_rule + " 条");
+  $("#info_traffic").text((plan.traffic / 1073741824).toFixed() + " GB");
 
-  if (plan.speed == 0) $("#info_speed").html("不限制"); else $("#info_speed").html(plan.speed + " Mbps");
-  if (plan.maxconn == 0) $("#info_conn").html("不限制"); else $("#info_conn").html(plan.conn);
+  if (plan.speed == 0) $("#info_speed").text("不限制"); else $("#info_speed").text(plan.speed + " Mbps");
+  if (plan.maxconn == 0) $("#info_conn").text("不限制"); else $("#info_conn").text(plan.conn);
 
-  if (plan.price == 0) $("#info_price").html("免费"); else $("#info_price").html(plan.price + " 元");
-  if (plan.cycle == 0) $("#info_cycle").html("一次性"); else $("#info_cycle").html(plan.cycle + " 天");
+  if (plan.price == 0) $("#info_price").text("免费"); else $("#info_price").text(plan.price + " 元");
+  if (plan.cycle == 0) $("#info_cycle").text("一次性"); else $("#info_cycle").text(plan.cycle + " 天");
 
   $("#info_note").val(plan.note);
   info.open();
@@ -124,7 +124,7 @@ function edit_plan(id) {
         plan = response.Data;
         plans[plan.id] = plan;
 
-        $("#edit_id").html(plan.id);
+        $("#edit_id").text(plan.id);
         $("#edit_name").val(plan.name);
 
         $("#edit_permissions option:selected").removeAttr("selected");
@@ -158,7 +158,7 @@ function edit_plan(id) {
 }
 
 $("#edit_enter").on("click", function () {
-  var id = $("#edit_id").html();
+  var id = $("#edit_id").text();
 
   var name = $("#edit_name").val();
   var permission_id = Number($("#edit_permissions option:selected").val());
@@ -278,45 +278,45 @@ function load_plans() {
           if (search != "" && plan.name.indexOf(search) == -1 && String(plan.id).indexOf(search) == -1) continue;
 
           var html = `<tr>
-            <td>${plan.id}</td>
-            <td>${plan.name}</td>
-            <td>${plan.permission_id} | ${permissions[plan.permission_id].name}</td>
+            <td>${escapeHTML(plan.id)}</td>
+            <td>${escapeHTML(plan.name)}</td>
+            <td>${escapeHTML(plan.permission_id)} | ${escapeHTML(permissions[plan.permission_id].name)}</td>
             <td>${(plan.traffic / 1073741824).toFixed()} GB</td>`;
           if (plan.speed == 0) {
             html += `<td>无限制</td>`
           } else {
-            html += `<td>${plan.speed} Mbps</td>`
+            html += `<td>${escapeHTML(plan.speed)} Mbps</td>`
           }
 
           html += `<td>
-            <span id="info_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '详细'}">
+            <span id="info_${escapeHTML(plan.id)}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '详细'}">
               <i class="mdui-icon material-icons">info_outline</i>
             </span>
-            <span id="sync_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '同步'}">
+            <span id="sync_${escapeHTML(plan.id)}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '同步'}">
               <i class="mdui-icon material-icons">sync</i>
             </span>
-            <span id="edit_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '修改'}">
+            <span id="edit_${escapeHTML(plan.id)}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '修改'}">
               <i class="mdui-icon material-icons">edit</i>
             </span>
-            <span id="delete_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '删除'}">
+            <span id="delete_${escapeHTML(plan.id)}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '删除'}">
               <i class="mdui-icon material-icons">delete</i>
             </span>  
           </td></tr>`;
           $("#plan_list").append(html);
 
-          $(`#info_${plan.id}`).on("click", null, plan, function (event) {
+          $(`#info_${escapeHTML(plan.id)}`).on("click", null, plan, function (event) {
             info_plan(event.data);
           });
 
-          $(`#sync_${plan.id}`).on("click", null, plan.id, function (event) {
+          $(`#sync_${escapeHTML(plan.id)}`).on("click", null, plan.id, function (event) {
             sync_plan(event.data);
           });
 
-          $(`#edit_${plan.id}`).on("click", null, plan.id, function (event) {
+          $(`#edit_${escapeHTML(plan.id)}`).on("click", null, plan.id, function (event) {
             edit_plan(event.data);
           });
 
-          $(`#delete_${plan.id}`).on("click", null, plan.id, function (event) {
+          $(`#delete_${escapeHTML(plan.id)}`).on("click", null, plan.id, function (event) {
             delete_plan(event.data);
           });
         }
@@ -342,8 +342,8 @@ function load_permissions() {
           var permission = response.Data[i];
           permissions[permission.id] = permission;
 
-          $("#add_permissions").append(`<option value="${permission.id}">${permission.name}</option>`)
-          $("#edit_permissions").append(`<option value="${permission.id}">${permission.name}</option>`)
+          $("#add_permissions").append(`<option value="${escapeHTML(permission.id)}">${escapeHTML(permission.name)}</option>`)
+          $("#edit_permissions").append(`<option value="${escapeHTML(permission.id)}">${escapeHTML(permission.name)}</option>`)
         }
 
         load_plans();
@@ -365,46 +365,46 @@ $("#search").keyup(function () {
     if (search != "" && plan.name.indexOf(search) == -1 && String(plan.id).indexOf(search) == -1) continue;
 
     var html = `<tr>
-      <td>${plan.id}</td>
-      <td>${plan.name}</td>
-      <td>${plan.permission_id} | ${permissions[plan.permission_id].name}</td>
+      <td>${escapeHTML(plan.id)}</td>
+      <td>${escapeHTML(plan.name)}</td>
+      <td>${escapeHTML(plan.permission_id)} | ${escapeHTML(permissions[plan.permission_id].name)}</td>
       <td>${(plan.traffic / 1073741824).toFixed()} GB</td>`;
 
     if (plan.speed == 0) {
       html += `<td>无限制</td>`
     } else {
-      html += `<td>${plan.speed} Mbps</td>`
+      html += `<td>${escapeHTML(plan.speed)} Mbps</td>`
     }
 
     html += `<td>
-      <span id="info_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '详细'}">
+      <span id="info_${escapeHTML(plan.id)}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '详细'}">
         <i class="mdui-icon material-icons">info_outline</i>
       </span>
-      <span id="sync_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '同步'}">
+      <span id="sync_${escapeHTML(plan.id)}class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '同步'}">
         <i class="mdui-icon material-icons">sync</i>
       </span>
-      <span id="edit_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '修改'}">
+      <span id="edit_${escapeHTML(plan.id)}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '修改'}">
         <i class="mdui-icon material-icons">edit</i>
       </span>
-      <span id="delete_${plan.id}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '删除'}">
+      <span id="delete_${escapeHTML(plan.id)}" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '删除'}">
         <i class="mdui-icon material-icons">delete</i>
       </span>  
     </td></tr>`;
     $("#plan_list").append(html);
 
-    $(`#info_${plan.id}`).on("click", null, plan, function (event) {
+    $(`#info_${escapeHTML(plan.id)}`).on("click", null, plan, function (event) {
       info_plan(event.data);
     });
 
-    $(`#sync_${plan.id}`).on("click", null, plan.id, function (event) {
+    $(`#sync_${escapeHTML(plan.id)}`).on("click", null, plan.id, function (event) {
       sync_plan(event.data);
     });
 
-    $(`#edit_${plan.id}`).on("click", null, plan.id, function (event) {
+    $(`#edit_${escapeHTML(plan.id)}`).on("click", null, plan.id, function (event) {
       edit_plan(event.data);
     });
 
-    $(`#delete_${plan.id}`).on("click", null, plan.id, function (event) {
+    $(`#delete_${escapeHTML(plan.id)}`).on("click", null, plan.id, function (event) {
       delete_plan(event.data);
     });
   }

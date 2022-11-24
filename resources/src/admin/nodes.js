@@ -189,49 +189,49 @@ $("#add_cancel").on("click", function () {
 
 function info_node(node) {
   var name = "";
-  $("#info_id").html(node.id);
-  $("#info_name").html(node.name);
+  $("#info_id").text(node.id);
+  $("#info_name").text(node.name);
 
-  $("#info_addr").html(node.addr);
-  $("#info_ips").html(node.assign_ips);
+  $("#info_addr").text(node.addr);
+  $("#info_ips").text(node.assign_ips);
   switch (node.mode) {
     case 1:
-      $("#info_mode").html("负载均衡");
+      $("#info_mode").text("负载均衡");
       break;
     case 2:
-      $("#info_mode").html("故障转移");
+      $("#info_mode").text("故障转移");
       break;
     default:
-      $("#info_mode").html("负载均衡");
+      $("#info_mode").text("负载均衡");
       break;
   }
 
-  $("#info_secret").html(node.secret);
-  if (node.updated == "0001-01-01") $("#info_updated").html("无"); else $("#info_updated").html(node.updated);
-  $("#info_traffic").html(node.traffic);
-  $("#info_speed").html(node.speed);
+  $("#info_secret").text(node.secret);
+  if (node.updated == "0001-01-01") $("#info_updated").text("无"); else $("#info_updated").text(node.updated);
+  $("#info_traffic").text(node.traffic);
+  $("#info_speed").text(node.speed);
 
   $("#info_icp").prop("checked", node.icp);
   $("#info_firewall").prop("checked", node.firewall);
   $("#info_tls_verify").prop("checked", node.tls_verify);
   $("#info_tls_verify_host").prop("checked", node.tls_verify_host);
-  $("#info_blocked_protocol").html(node.blocked_protocol);
-  $("#info_blocked_hostname").html(node.blocked_hostname);
-  $("#info_blocked_path").html(node.blocked_path);
+  $("#info_blocked_protocol").text(node.blocked_protocol);
+  $("#info_blocked_hostname").text(node.blocked_hostname);
+  $("#info_blocked_path").text(node.blocked_path);
 
-  $("#info_outbounds").html();
+  $("#info_outbounds").text();
   if (node.outbounds != null) {
     for (name in node.outbounds) {
       $("#info_outbounds").append(name + "=" + node.outbounds[name] + "<br>");
     }
   }
 
-  $("#info_nat_port").html(node.nat_port);
-  $("#info_http_port").html(node.http_port);
-  $("#info_https_port").html(node.https_port);
-  $("#info_secure_port").html(node.secure_port);
-  $("#info_securex_port").html(node.securex_port);
-  $("#info_tls_port").html(node.tls_port);
+  $("#info_nat_port").text(node.nat_port);
+  $("#info_http_port").text(node.http_port);
+  $("#info_https_port").text(node.https_port);
+  $("#info_secure_port").text(node.secure_port);
+  $("#info_securex_port").text(node.securex_port);
+  $("#info_tls_port").text(node.tls_port);
 
   var protocols = node.protocol.split("|")
   $("#info_protocol").empty()
@@ -252,11 +252,11 @@ function info_node(node) {
     if (permission.nodes.split("|").indexOf(String(node.id)) != -1) $("#info_permissions").append(permission.name + "<br>")
   }
 
-  $("#info_sni").html(node.tls_sni);
-  $("#info_port_range").html(node.port_range);
-  $("#info_reseved_port").html(node.reseved_port);
-  $("#info_reseved_target_port").html(node.reseved_target_port);
-  $("#info_note").html(node.note);
+  $("#info_sni").text(node.tls_sni);
+  $("#info_port_range").text(node.port_range);
+  $("#info_reseved_port").text(node.reseved_port);
+  $("#info_reseved_target_port").text(node.reseved_target_port);
+  $("#info_note").text(node.note);
 
   info.open();
 }
@@ -329,7 +329,7 @@ function edit_node(id) {
         node = response.Data;
         nodes[node.id] = node;
 
-        $("#edit_id").html(node.id);
+        $("#edit_id").text(node.id);
         $("#edit_name").val(node.name);
 
         $("#edit_addr").val(node.addr);
@@ -419,7 +419,7 @@ function edit_node(id) {
 }
 
 $("#edit_enter").on("click", function () {
-  var id = $("#edit_id").html();
+  var id = $("#edit_id").text();
   var name = $("#edit_name").val();
 
   var addr = $("#edit_addr").val();

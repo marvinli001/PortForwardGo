@@ -16,26 +16,26 @@ $.ajax({
                 return
             }
 
-            if (plan.id == 0) $("#info_name").html("定制套餐"); else $("#info_name").html(plan.name);
+            if (plan.id == 0) $("#info_name").text("定制套餐"); else $("#info_name").text(plan.name);
 
-            if (user.reset_date == "0001-01-01") $("#info_resetdate").html("无"); else $("#info_resetdate").html(user.reset_date);
+            if (user.reset_date == "0001-01-01") $("#info_resetdate").text("无"); else $("#info_resetdate").text(user.reset_date);
             if (user.expire_date == "0001-01-01") {
-                $("#info_expiredate").html("无");
+                $("#info_expiredate").text("无");
                 $("#info_renew").attr("disabled", true);
-            } else $("#info_expiredate").html(user.expire_date);
+            } else $("#info_expiredate").text(user.expire_date);
 
             $("#info_autorenew").prop("checked", user.auto_renew);
 
-            $("#info_rule").html(user.rule + " 条");
-            $("#info_nat_rule").html(user.nat_rule + " 条");
-            $("#info_traffic").html((user.traffic / 1073741824).toFixed() + " GB");
-            $("#info_traffic_used").html((user.traffic_used / 1073741824).toFixed(2) + " GB");
+            $("#info_rule").text(user.rule + " 条");
+            $("#info_nat_rule").text(user.nat_rule + " 条");
+            $("#info_traffic").text((user.traffic / 1073741824).toFixed() + " GB");
+            $("#info_traffic_used").text((user.traffic_used / 1073741824).toFixed(2) + " GB");
 
-            if (user.speed == 0) $("#info_speed").html("不限制"); else $("#info_speed").html(user.speed + " Mbps");
-            if (user.maxconn == 0) $("#info_maxconn").html("不限制"); else $("#info_maxconn").html(user.maxconn);
+            if (user.speed == 0) $("#info_speed").text("不限制"); else $("#info_speed").text(user.speed + " Mbps");
+            if (user.maxconn == 0) $("#info_maxconn").text("不限制"); else $("#info_maxconn").text(user.maxconn);
 
-            if (user.price == 0) $("#info_price").html("免费"); else $("#info_price").html(user.price + " 元");
-            if (user.cycle == 0) $("#info_cycle").html("一次性"); else $("#info_cycle").html(user.cycle + " 天");
+            if (user.price == 0) $("#info_price").text("免费"); else $("#info_price").text(user.price + " 元");
+            if (user.cycle == 0) $("#info_cycle").text("一次性"); else $("#info_cycle").text(user.cycle + " 天");
 
             $("#view_plan").removeAttr("style");
             done();

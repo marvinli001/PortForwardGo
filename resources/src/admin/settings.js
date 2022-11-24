@@ -223,7 +223,7 @@ $.ajax({
 })
   .done(function (response) {
     if (response.Ok) {
-      $("#version").html(response.Data.version);
+      $("#version").text(response.Data.version);
       $("#system_url").val(response.Data.system_url);
       $("#license").val(response.Data.license);
       $("#secure_key").val(response.Data.secure_key);

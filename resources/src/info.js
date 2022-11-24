@@ -9,7 +9,7 @@ $.ajax({
                 $("#admin_banner").removeAttr("style");
             }
 
-            $("#welcome").append(" " + response.Data.name);
+            $("#welcome").append(" " + escapeHTML(response.Data.name));
 
             if (response.Data.permission_id == 0) {
                 $("#no_plan").removeAttr("style");

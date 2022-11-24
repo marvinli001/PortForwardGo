@@ -150,54 +150,54 @@ $("#add_cancel").on("click", function () {
 });
 
 function info_user(user) {
-  $("#info_id").html(user.id)
-  $("#info_name").html(user.name);
-  $("#info_username").html(user.username);
-  $("#info_token").html(user.token);
-  if (user.last_ip == null) $("#info_last_ip").html(""); else $("#info_last_ip").html(user.last_ip);
-  if (user.last_active == "0001-01-01") $("#info_last_active").html(""); else $("#info_last_active").html(user.last_active);
-  $("#info_registration_date").html(user.registration_date);
+  $("#info_id").text(user.id)
+  $("#info_name").text(user.name);
+  $("#info_username").text(user.username);
+  $("#info_token").text(user.token);
+  if (user.last_ip == null) $("#info_last_ip").text(""); else $("#info_last_ip").text(user.last_ip);
+  if (user.last_active == "0001-01-01") $("#info_last_active").text(""); else $("#info_last_active").text(user.last_active);
+  $("#info_registration_date").text(user.registration_date);
 
-  if (user.plan_id == 0) $("#info_plan").html("无"); else $("#info_plan").html(user.plan_id + " | " + plans[user.plan_id].name);
-  if (user.permission_id == 0) $("#info_permissions").html("无"); else $("#info_permissions").html(user.permission_id + " | " + permissions[user.permission_id].name);
+  if (user.plan_id == 0) $("#info_plan").text("无"); else $("#info_plan").text(user.plan_id + " | " + plans[user.plan_id].name);
+  if (user.permission_id == 0) $("#info_permissions").text("无"); else $("#info_permissions").text(user.permission_id + " | " + permissions[user.permission_id].name);
 
-  if (user.reset_date == "0001-01-01") $("#info_resetdate").html("无"); else $("#info_resetdate").html(user.reset_date);
-  if (user.expire_date == "0001-01-01") $("#info_expiredate").html("无"); else $("#info_expiredate").html(user.expire_date);
+  if (user.reset_date == "0001-01-01") $("#info_resetdate").text("无"); else $("#info_resetdate").text(user.reset_date);
+  if (user.expire_date == "0001-01-01") $("#info_expiredate").text("无"); else $("#info_expiredate").text(user.expire_date);
 
   $("#info_autorenew").prop("checked", user.auto_renew);
-  $("#info_balance").html(user.balance + " 元");
+  $("#info_balance").text(user.balance + " 元");
 
   if (user.permission_id == 0) {
-    $("#info_rule").html("未购买");
-    $("#info_nat_rule").html("未购买");
-    $("#info_traffic").html("未购买");
-    $("#info_traffic_used").html("未购买");
+    $("#info_rule").text("未购买");
+    $("#info_nat_rule").text("未购买");
+    $("#info_traffic").text("未购买");
+    $("#info_traffic_used").text("未购买");
 
-    $("#info_speed").html("未购买");
-    $("#info_maxconn").html("未购买");
-    $("#info_price").html("未购买");
-    $("#info_cycle").html("未购买");
+    $("#info_speed").text("未购买");
+    $("#info_maxconn").text("未购买");
+    $("#info_price").text("未购买");
+    $("#info_cycle").text("未购买");
   } else {
-    $("#info_rule").html(user.rule + " 条");
-    $("#info_nat_rule").html(user.nat_rule + " 条");
-    $("#info_traffic").html((user.traffic / 1073741824).toFixed() + " GB");
-    $("#info_traffic_used").html((user.traffic_used / 1073741824).toFixed(2) + " GB");
+    $("#info_rule").text(user.rule + " 条");
+    $("#info_nat_rule").text(user.nat_rule + " 条");
+    $("#info_traffic").text((user.traffic / 1073741824).toFixed() + " GB");
+    $("#info_traffic_used").text((user.traffic_used / 1073741824).toFixed(2) + " GB");
 
-    if (user.speed == 0) $("#info_speed").html("不限制"); else $("#info_speed").html(user.speed + " Mbps");
-    if (user.maxconn == 0) $("#info_maxconn").html("不限制"); else $("#info_maxconn").html(user.maxconn);
+    if (user.speed == 0) $("#info_speed").text("不限制"); else $("#info_speed").text(user.speed + " Mbps");
+    if (user.maxconn == 0) $("#info_maxconn").text("不限制"); else $("#info_maxconn").text(user.maxconn);
 
     if (user.reset_date == "0001-01-01" && user.expire_date == "0001-01-01") {
-      $("#info_price").html("一次性终身套餐");
-      $("#info_cycle").html("一次性终身套餐");
+      $("#info_price").text("一次性终身套餐");
+      $("#info_cycle").text("一次性终身套餐");
     } else if (user.reset_date == "0001-01-01") {
-      $("#info_price").html("一次性套餐");
-      $("#info_cycle").html("一次性套餐");
+      $("#info_price").text("一次性套餐");
+      $("#info_cycle").text("一次性套餐");
     } else if (user.expire_date == "0001-01-01") {
-      $("#info_price").html("终身套餐");
-      $("#info_cycle").html("终身套餐");
+      $("#info_price").text("终身套餐");
+      $("#info_cycle").text("终身套餐");
     } else {
-      $("#info_price").html(user.price + " 元");
-      $("#info_cycle").html(user.cycle + " 天");
+      $("#info_price").text(user.price + " 元");
+      $("#info_cycle").text(user.cycle + " 天");
     }
   }
 
@@ -231,7 +231,7 @@ function edit_user(id) {
         user = response.Data;
         users[user.id] = user;
 
-        $("#edit_id").html(user.id)
+        $("#edit_id").text(user.id)
         $("#edit_name").val(user.name);
         $("#edit_username").val(user.username);
         $("#edit_password").val("");
@@ -310,7 +310,7 @@ $("#edit_plan").on("change", function () {
 })
 
 $("#edit_enter").on("click", function () {
-  var id = $("#edit_id").html();
+  var id = $("#edit_id").text();
 
   var name = $("#edit_name").val();
   var password = $("#edit_password").val();
@@ -440,7 +440,7 @@ function load_users() {
 
           var html = `<tr>
             <td>${user.id}</td>
-            <td>${user.name}<br><small class="mdui-text-color-grey">${user.username}</td>`;
+            <td>${escapeHTML(user.name)}<br><small class="mdui-text-color-grey">${escapeHTML(user.username)}</td>`;
 
           if (user.plan_id == 0) {
             html += `<td>无</td>`
@@ -579,7 +579,7 @@ $("#search").keyup(function () {
 
     var html = `<tr>
       <td>${user.id}</td>
-      <td>${user.name}<br><small class="mdui-text-color-grey">${user.username}</td>`;
+      <td>${escapeHTML(user.name)}<br><small class="mdui-text-color-grey">${escapeHTML(user.username)}</td>`;
 
     if (user.plan_id == 0) {
       html += `<td>无</td>`
