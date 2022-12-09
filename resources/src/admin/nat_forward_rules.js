@@ -162,7 +162,7 @@ $("#edit_enter").on("click", function () {
 
   var name = $("#edit_name").val();
   var proxy_protocol = Number($("#edit_proxyprotocol option:selected").val());
-  var target_host = $("#edit_target_host").val();
+  var target_host = $("#edit_target_host").val().trim();
   var target_port = Number($("#edit_target_port").val());
   var config = {};
 

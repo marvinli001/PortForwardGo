@@ -20,13 +20,13 @@ $("#add").on("click", function () {
 
 $("#add_enter").on("click", function () {
   var name = $("#add_name").val();
-  var ips = $("#add_ips").val();
+  var ips = $("#add_ips").val().replace(/\s*/g, "");
   var mode = Number($("#add_mode option:selected").val());
 
   var secure_port = Number($("#add_secure_port").val());
   var securex_port = Number($("#add_securex_port").val());
   var tls_port = Number($("#add_tls_port").val());
-  var sni = $("#add_sni").val()
+  var sni = $("#add_sni").val().trim();
 
   if (!name || !ips || !sni) {
     sendmsg("请填写名称, 节点地址, TLS隧道SNI");
@@ -106,13 +106,13 @@ $("#edit_enter").on("click", function () {
   }
 
   var name = $("#edit_name").val();
-  var ips = $("#edit_ips").val();
+  var ips = $("#edit_ips").val().replace(/\s*/g, "");
   var mode = Number($("#edit_mode option:selected").val());
 
   var secure_port = Number($("#edit_secure_port").val());
   var securex_port = Number($("#edit_securex_port").val());
   var tls_port = Number($("#edit_tls_port").val());
-  var sni = $("#edit_sni").val()
+  var sni = $("#edit_sni").val().trim();
 
   if (!name || !ips || !sni) {
     sendmsg("请填写名称, 节点地址, TLS隧道SNI");

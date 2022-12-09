@@ -168,8 +168,8 @@ $("#add_enter").on("click", function () {
   var name = $("#add_name").val();
   var node = Number($("#add_node option:selected").val());
   var protocol = $("#add_protocol option:selected").val();
-  var bind = $("#add_bind").val();
-  var target_host = $("#add_target_host").val();
+  var bind = $("#add_bind").val().trim();
+  var target_host = $("#add_target_host").val().trim();
   var target_port = Number($("#add_target_port").val());
   var proxy_protocol = Number($("#add_proxyprotocol option:selected").val());
 
@@ -193,7 +193,7 @@ $("#add_enter").on("click", function () {
     }
 
     var key = $(this).attr("conf");
-    config[key] = $(this).val();
+    config[key] = $(this).val().trim();
   });
 
   switch (protocol) {
@@ -408,7 +408,7 @@ $("#edit_enter").on("click", function () {
 
   var name = $("#edit_name").val();
   var proxy_protocol = Number($("#edit_proxyprotocol option:selected").val());
-  var target_host = $("#edit_target_host").val();
+  var target_host = $("#edit_target_host").val().trim();
   var target_port = Number($("#edit_target_port").val());
   var config = {};
 
@@ -428,7 +428,7 @@ $("#edit_enter").on("click", function () {
     }
 
     var key = $(this).attr("conf");
-    config[key] = $(this).val();
+    config[key] = $(this).val().trim();
   });
 
   $.ajax({

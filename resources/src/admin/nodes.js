@@ -69,8 +69,8 @@ $("#add").on("click", function () {
 
 $("#add_enter").on("click", function () {
   var name = $("#add_name").val();
-  var addr = $("#add_addr").val();
-  var assign_ips = $("#add_ips").val();
+  var addr = $("#add_addr").val().trim();
+  var assign_ips = $("#add_ips").val().replace(/\s*/g, "");
   var mode = Number($("#add_mode option:selected").val());
   var traffic = Number($("#add_traffic").val());
   var speed = Number($("#add_speed").val());
@@ -108,9 +108,9 @@ $("#add_enter").on("click", function () {
   });
 
   var sni = $("#add_sni").val();
-  var port_range = $("#add_port_range").val();
-  var reseved_port = $("#add_reseved_port").val();
-  var reseved_target_port = $("#add_reseved_target_port").val();
+  var port_range = $("#add_port_range").val().trim();
+  var reseved_port = $("#add_reseved_port").val().replace(/\s*/g, "");
+  var reseved_target_port = $("#add_reseved_target_port").val().replace(/\s*/g, "");
   var note = $("#add_note").val();
 
   if (!name || !addr || !port_range || !sni) {
@@ -124,7 +124,7 @@ $("#add_enter").on("click", function () {
       return;
     }
 
-    var ip = $("input[outbound=" + index + "][data-type=ip]").val();
+    var ip = $("input[outbound=" + index + "][data-type=ip]").val().trim();
     outbounds[item.value] = ip;
   });
 
@@ -422,8 +422,8 @@ $("#edit_enter").on("click", function () {
   var id = $("#edit_id").text();
   var name = $("#edit_name").val();
 
-  var addr = $("#edit_addr").val();
-  var assign_ips = $("#edit_ips").val();
+  var addr = $("#edit_addr").val().trim();
+  var assign_ips = $("#edit_ips").val().replace(/\s*/g, "");
   var mode = Number($("#edit_mode option:selected").val());
   var traffic = Number($("#edit_traffic").val());
   var speed = Number($("#edit_speed").val());
@@ -451,7 +451,7 @@ $("#edit_enter").on("click", function () {
       return;
     }
 
-    var ip = $("input[outbound=" + index + "][data-type=ip]").val();
+    var ip = $("input[outbound=" + index + "][data-type=ip]").val().trim();
     outbounds[item.value] = ip;
   });
 
@@ -471,9 +471,9 @@ $("#edit_enter").on("click", function () {
   });
 
   var sni = $("#edit_sni").val();
-  var port_range = $("#edit_port_range").val();
-  var reseved_port = $("#edit_reseved_port").val();
-  var reseved_target_port = $("#edit_reseved_target_port").val();
+  var port_range = $("#edit_port_range").val().trim();
+  var reseved_port = $("#edit_reseved_port").val().replace(/\s*/g, "");
+  var reseved_target_port = $("#edit_reseved_target_port").val().replace(/\s*/g, "");
   var note = $("#edit_note").val();
 
   if (!id) {

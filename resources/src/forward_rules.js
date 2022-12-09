@@ -285,7 +285,7 @@ $("#add_enter").on("click", function () {
   var name = $("#add_name").val();
   var node = Number($("#add_node option:selected").val());
   var protocol = $("#add_protocol option:selected").val();
-  var bind = $("#add_bind").val();
+  var bind = $("#add_bind").val().trim();
 
   var mode = Number($("#add_mode option:selected").val());
   var targets = [];
@@ -308,11 +308,12 @@ $("#add_enter").on("click", function () {
     }
 
     var key = $(this).attr("conf");
-    config[key] = $(this).val();
+    config[key] = $(this).val().trim();
   });
 
   $("input[target][type=text]").each(function (index, item) {
-    if (!item.value) {
+    var host = item.value.trim();
+    if (!host) {
       sendmsg("请填完所有选项");
       return;
     }
@@ -324,7 +325,7 @@ $("#add_enter").on("click", function () {
     }
 
     targets.push({
-      Host: item.value,
+      Host: host,
       Port: port,
     });
   });
@@ -419,7 +420,7 @@ $("#adds_enter").on("click", function () {
     }
 
     var key = $(this).attr("conf");
-    config[key] = $(this).val();
+    config[key] = $(this).val().trim();
   });
 
   var dest = Number($("#adds_dest option:selected").val());
@@ -472,8 +473,8 @@ $("#adds_enter").on("click", function () {
         name: line[0],
         mode: 0,
         protocol: protocol,
-        bind: line[1],
-        targets: [{ Host: line[2], Port: Number(line[3]) }],
+        bind: line[1].trim(),
+        targets: [{ Host: line[2].trim(), Port: Number(line[3]) }],
         outbound: outbound,
         proxy_protocol: proxy_protocol,
         conf: config,
@@ -847,11 +848,12 @@ $("#edit_enter").on("click", function () {
     }
 
     var key = $(this).attr("conf");
-    config[key] = $(this).val();
+    config[key] = $(this).val().trim();
   });
 
   $("input[target][type=text]").each(function (index, item) {
-    if (!item.value) {
+    var host = item.value.trim();
+    if (!host) {
       sendmsg("请填完所有选项");
       return;
     }
@@ -863,7 +865,7 @@ $("#edit_enter").on("click", function () {
     }
 
     targets.push({
-      Host: item.value,
+      Host: host,
       Port: port,
     });
   });

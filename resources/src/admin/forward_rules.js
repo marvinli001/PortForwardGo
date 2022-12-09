@@ -252,11 +252,12 @@ $("#edit_enter").on("click", function () {
     }
 
     var key = $(this).attr("conf");
-    config[key] = $(this).val();
+    config[key] = $(this).val().trim();
   });
 
   $("input[target][type=text]").each(function (index, item) {
-    if (!item.value) {
+    var host = item.value.trim()
+    if (!host) {
       sendmsg("请填完所有选项");
       return;
     }
@@ -268,7 +269,7 @@ $("#edit_enter").on("click", function () {
     }
 
     targets.push({
-      Host: item.value,
+      Host: host,
       Port: port,
     });
   });
