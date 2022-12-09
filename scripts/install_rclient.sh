@@ -149,6 +149,8 @@ sed -i "s#{secret}#${secret}#g" /etc/systemd/system/${service_name}.service
 
 rm -rf /tmp/*
 
+echo -e "${Font_Yellow} ** Optimize system config...${Font_Suffix}"
+
 echo "vm.swappiness = 10
 fs.file-max = 1000000
 fs.inotify.max_user_instances = 8192
@@ -158,6 +160,7 @@ fs.pipe-user-pages-soft = 0
 
 net.core.default_qdisc=fq
 net.ipv4.tcp_congestion_control=bbr" >/etc/sysctl.d/98-optimize.conf
+echo -e "${Font_Green}已开启BBR和系统调优, 配置文件 /etc/sysctl.d/98-optimize.conf${Font_Suffix}"
 
 echo "* soft nofile 1048576
 * hard nofile 1048576
@@ -167,9 +170,12 @@ echo "* soft nofile 1048576
 * hard core 1048576
 * hard memlock unlimited
 * soft memlock unlimited" >/etc/security/limits.conf
+echo -e "${Font_Green}已解除系统ulimit限制, 配置文件 /etc/security/limits.conf${Font_Suffix}"
 
+echo -e "${Font_Green}应用新的系统配置...${Font_Suffix}"
 sysctl -p >/dev/null 2>&1
 sysctl --system >/dev/null 2>&1
+echo -e "${Font_Green}优化完成, 部分优化可能需要重启系统才能生效${Font_Suffix}"
 
 echo -e "${Font_Yellow} ** Starting program...${Font_Suffix}"
 systemctl daemon-reload

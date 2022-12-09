@@ -149,6 +149,11 @@ sed -i "s#{secret}#${secret}#g" /etc/systemd/system/${service_name}.service
 
 rm -rf /tmp/*
 
+echo -e "${Font_Yellow} ** Optimize system config...${Font_Suffix}"
+
+echo "net.ipv4.ip_local_port_range = 1024 65535" >/etc/sysctl.d/97-system-port-range.conf
+echo -e "${Font_Green}已修改系统对外连接占用端口为 1024-65535, 配置文件 /etc/sysctl.d/97-system-port-range.conf${Font_Suffix}"
+
 echo "vm.swappiness = 10
 fs.file-max = 1000000
 fs.inotify.max_user_instances = 8192
@@ -167,7 +172,6 @@ net.ipv4.tcp_timestamps = 1
 net.ipv4.tcp_keepalive_time = 1200
 net.ipv4.tcp_keepalive_probes = 3
 net.ipv4.tcp_keepalive_intvl = 15
-net.ipv4.ip_local_port_range = 60000 65535
 net.ipv4.tcp_max_syn_backlog = 8192
 net.ipv4.tcp_max_tw_buckets = 3000
 net.ipv4.route.gc_timeout = 100
@@ -185,7 +189,7 @@ net.core.netdev_max_backlog = 400000
 net.core.netdev_budget = 600
 net.ipv4.tcp_max_orphans = 3276800
 
- # forward
+# forward
 net.ipv4.ip_forward = 1
 net.ipv6.conf.all.forwarding = 1
 
@@ -215,6 +219,7 @@ net.netfilter.nf_conntrack_tcp_timeout_close_wait = 15
 net.netfilter.nf_conntrack_tcp_timeout_established = 350
 net.netfilter.nf_conntrack_max = 25000000
 net.netfilter.nf_conntrack_buckets = 25000000" >/etc/sysctl.d/98-optimize.conf
+echo -e "${Font_Green}已开启BBR和系统调优, 配置文件 /etc/sysctl.d/98-optimize.conf${Font_Suffix}"
 
 echo "* soft nofile 1048576
 * hard nofile 1048576
@@ -224,9 +229,12 @@ echo "* soft nofile 1048576
 * hard core 1048576
 * hard memlock unlimited
 * soft memlock unlimited" >/etc/security/limits.conf
+echo -e "${Font_Green}已解除系统ulimit限制, 配置文件 /etc/security/limits.conf${Font_Suffix}"
 
+echo -e "${Font_Green}应用新的系统配置...${Font_Suffix}"
 sysctl -p >/dev/null 2>&1
 sysctl --system >/dev/null 2>&1
+echo -e "${Font_Green}优化完成, 部分优化可能需要重启系统才能生效${Font_Suffix}"
 
 echo -e "${Font_Yellow} ** Starting program...${Font_Suffix}"
 systemctl daemon-reload
