@@ -33,4 +33,4 @@ PortForwardGo 是一款高性能端口转发后端,内置防火墙, 同时支持
 
 ## Wiki
 
-[点此打开](https://gitlab.com/CoiaPrant/PortForwardGo/-/wikis/home)
+[点此打开](https://gitlab.com/ProjectPF/PortForwardGo/-/wikis/home)

@@ -70,7 +70,7 @@ $("#add").on("click", function () {
 $("#add_enter").on("click", function () {
   var name = $("#add_name").val();
   var addr = $("#add_addr").val().trim();
-  var assign_ips = $("#add_ips").val().replace(/\s*/g, "");
+  var assign_ips = $("#add_ips").val().replaceAll(" ", "");
   var mode = Number($("#add_mode option:selected").val());
   var traffic = Number($("#add_traffic").val());
   var speed = Number($("#add_speed").val());
@@ -109,8 +109,8 @@ $("#add_enter").on("click", function () {
 
   var sni = $("#add_sni").val();
   var port_range = $("#add_port_range").val().trim();
-  var reseved_port = $("#add_reseved_port").val().replace(/\s*/g, "");
-  var reseved_target_port = $("#add_reseved_target_port").val().replace(/\s*/g, "");
+  var reseved_port = $("#add_reseved_port").val().replaceAll(" ", "");
+  var reseved_target_port = $("#add_reseved_target_port").val().replaceAll(" ", "");
   var note = $("#add_note").val();
 
   if (!name || !addr || !port_range || !sni) {
@@ -423,7 +423,7 @@ $("#edit_enter").on("click", function () {
   var name = $("#edit_name").val();
 
   var addr = $("#edit_addr").val().trim();
-  var assign_ips = $("#edit_ips").val().replace(/\s*/g, "");
+  var assign_ips = $("#edit_ips").val().replaceAll(" ", "");
   var mode = Number($("#edit_mode option:selected").val());
   var traffic = Number($("#edit_traffic").val());
   var speed = Number($("#edit_speed").val());
@@ -472,8 +472,8 @@ $("#edit_enter").on("click", function () {
 
   var sni = $("#edit_sni").val();
   var port_range = $("#edit_port_range").val().trim();
-  var reseved_port = $("#edit_reseved_port").val().replace(/\s*/g, "");
-  var reseved_target_port = $("#edit_reseved_target_port").val().replace(/\s*/g, "");
+  var reseved_port = $("#edit_reseved_port").val().replaceAll(" ", "");
+  var reseved_target_port = $("#edit_reseved_target_port").val().replaceAll(" ", "");
   var note = $("#edit_note").val();
 
   if (!id) {

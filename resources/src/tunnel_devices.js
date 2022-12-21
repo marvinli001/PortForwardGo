@@ -20,7 +20,7 @@ $("#add").on("click", function () {
 
 $("#add_enter").on("click", function () {
   var name = $("#add_name").val();
-  var ips = $("#add_ips").val().replace(/\s*/g, "");
+  var ips = $("#add_ips").val().replaceAll(" ", "");
   var mode = Number($("#add_mode option:selected").val());
 
   var secure_port = Number($("#add_secure_port").val());
@@ -106,7 +106,7 @@ $("#edit_enter").on("click", function () {
   }
 
   var name = $("#edit_name").val();
-  var ips = $("#edit_ips").val().replace(/\s*/g, "");
+  var ips = $("#edit_ips").val().replaceAll(" ", "");
   var mode = Number($("#edit_mode option:selected").val());
 
   var secure_port = Number($("#edit_secure_port").val());

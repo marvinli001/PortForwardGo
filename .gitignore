@@ -359,3 +359,4 @@ library/quic-go/
 library/lz4/
 library/ratelimit/
 library/cpu/
+library/license/
